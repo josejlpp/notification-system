@@ -25,6 +25,11 @@ class User
         return $this->channels;
     }
 
+    public function getEmail(): string
+    {
+        return $this->email->value;
+    }
+
     public function toArray(): array
     {
         return [
