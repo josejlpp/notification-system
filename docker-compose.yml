@@ -4,7 +4,7 @@ services:
   php-fpm:
       image: php:8-fpm
       volumes:
-          - .:/var/www/html
+          - ./backend:/var/www/html
 
   queue:
       image: php:8-fpm
@@ -13,14 +13,14 @@ services:
         - artisan
         - queue:work
       volumes:
-          - .:/var/www/html
+          - ./backend:/var/www/html
 
   web:
       image: nginx:latest
       ports:
-        - '80:80'
+        - '8080:80'
       volumes:
-        - .:/var/www/html
+        - ./backend:/var/www/html
         - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
       links:
           - php-fpm
