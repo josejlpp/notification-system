@@ -30,4 +30,16 @@ class CreateUserEntityTest extends TestCase
         $this->expectExceptionMessage('E-mail not valid!');
         $email = new Email('teste-gmail.com');
     }
+
+    public function testSetChannels()
+    {
+        $user = new User(
+            "Jose Luiz",
+            new Email('name@gmail.com'),
+            '551899999999'
+        );
+
+        $user->setChannels(['test', 'sms', 'email']);
+        $this->assertEquals(3, count($user->getChannels()));
+    }
 }

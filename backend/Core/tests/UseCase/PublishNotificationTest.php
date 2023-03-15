@@ -2,7 +2,6 @@
 
 namespace Core\tests\UseCase;
 
-use Core\Contracts\IRepository;
 use Core\Entities\Notification;
 use Core\Entities\User;
 use Core\Entities\ValueObject\Email;
@@ -15,11 +14,20 @@ class PublishNotificationTest extends TestCase
 {
     public function testCreatePublishNotificationClass()
     {
-        $repositoryMock = $this->createMock(IRepository::class);
+        $publisherAdapterObj = new PublishTestAdapter();
+        $publisherCollection = new PublisherCollection();
+        $publisherCollection->addPublisher('test', $publisherAdapterObj);
+
+        $notificationPublisher = new PublishNotification($publisherCollection);
+        $this->assertInstanceOf(PublishNotification::class, $notificationPublisher);
+    }
+
+    public function testCreatePublishNotificationException()
+    {
+        $this->expectExceptionMessage('The property PublisherCollection not be empty!');
         $publisherCollection = new PublisherCollection();
 
-        $publisher = new PublishNotification($repositoryMock, $publisherCollection);
-        $this->assertInstanceOf(PublishNotification::class, $publisher);
+        $notificationPublisher = new PublishNotification($publisherCollection);
     }
 
     public function testPublishNotificationSend()
@@ -37,14 +45,12 @@ class PublishNotificationTest extends TestCase
 
         $user->setChannels(['test', 'email']);
 
-        $repositoryMock = $this->createMock(IRepository::class);
-        $repositoryMock->method('getUserByCategory')->willReturn([$user]);
-
         $publisherAdapterObj = new PublishTestAdapter();
         $publisherCollection = new PublisherCollection();
-        $publisherCollection->add('test', $publisherAdapterObj);
+        $publisherCollection->addPublisher('test', $publisherAdapterObj);
 
-        $publisher = new PublishNotification($repositoryMock, $publisherCollection);
-        $publisher->handle($notification);
+        $notificationPublisher = new PublishNotification($publisherCollection);
+        $responsePublisher = $notificationPublisher->handle($user, $notification);
+        $this->assertIsArray($responsePublisher);
     }
 }

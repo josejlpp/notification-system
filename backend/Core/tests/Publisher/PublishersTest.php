@@ -22,7 +22,7 @@ class PublishersTest extends TestCase
     {
         $collection = new PublisherCollection();
         $publisher = $this->createMock(IPublisherAdapter::class);
-        $collection->add('sms', $publisher);
+        $collection->addPublisher('sms', $publisher);
         $this->assertCount(1, $collection);
     }
 
@@ -30,14 +30,14 @@ class PublishersTest extends TestCase
     {
         $collection = new PublisherCollection();
         $publisher = $this->createMock(IPublisherAdapter::class);
-        $collection->add('sms', $publisher);
+        $collection->addPublisher('sms', $publisher);
         $this->assertInstanceOf(IPublisherAdapter::class, $collection->getPublisher('sms'));
     }
 
     public function testPublishChannelNotExists()
     {
         $collection = new PublisherCollection();
-        $this->assertFalse($collection->getPublisher('test'));
+        $this->assertNull($collection->getPublisher('test'));
     }
 
     public function testSendPushSuccess()
@@ -55,10 +55,9 @@ class PublishersTest extends TestCase
 
         $collection = new PublisherCollection();
         $publisherAdapterObj = new PublishTestAdapter();
-        $collection->add('test', $publisherAdapterObj);
-        $collection->getPublisher('test')->publishMessage($user, $notification);
-        $publisher = new PublishTestAdapter();
+        $collection->addPublisher('test', $publisherAdapterObj);
+        $publisherAdapter = new PublishTestAdapter();
 
-        $this->assertTrue($publisher->publishMessage($user, $notification));
+        $this->assertTrue($publisherAdapter->publishMessage($user, $notification));
     }
 }

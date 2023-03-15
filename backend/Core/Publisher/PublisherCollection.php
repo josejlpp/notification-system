@@ -9,14 +9,14 @@ class PublisherCollection implements IteratorAggregate
 {
     private array $items = [];
 
+    public function addPublisher(string $key, IPublisherAdapter $adapter)
+    {
+        $this->items[$key] = $adapter;
+    }
+
     public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->items);
-    }
-
-    public function add(string $key, IPublisherAdapter $adapter)
-    {
-        $this->items[$key] = $adapter;
     }
 
     public function count()
@@ -26,6 +26,6 @@ class PublisherCollection implements IteratorAggregate
 
     public function getPublisher(string $key)
     {
-        return $this->getIterator()->offsetGet($key) ?? false;
+        return $this->getIterator()->offsetExists($key) ? $this->getIterator()->offsetGet($key) : null;
     }
 }
