@@ -1,47 +1,46 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <div class="container">
+    <Navbar></Navbar>
+    <component :is="currentView" />
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
+<script>
+import NotificationList from "./components/NotificationList.vue";
+import NotificationSentList from "./components/NotificationSentList.vue";
+import Navbar from "./components/Navbar.vue";
+
+const routes = {
+  '/': NotificationList,
+  '/list-notification': NotificationList,
+  '/list-notification-sent': NotificationSentList,
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+export default {
+  components: {
+    NotificationList,
+    NotificationSentList,
+    Navbar
+  },
+  data() {
+    return {
+      currentPath: window.location.hash
+    }
+  },
+  computed: {
+    currentView() {
+      return routes[this.currentPath.slice(1) || '/'] || NotFound
+    }
+  },
+  mounted() {
+    window.addEventListener('hashchange', () => {
+      this.currentPath = window.location.hash
+    })
+  }
 }
+</script>
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
+<style>
+  @import 'bootstrap/dist/css/bootstrap.min.css';
+  @import "bootstrap-vue/dist/bootstrap-vue.min.css";
 </style>

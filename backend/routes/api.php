@@ -20,5 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post("notification", [NotificationController::class, "store"]);
-Route::get("notification/show", [NotificationController::class, "show"]);
-Route::get("user/{id}/notification", [NotificationController::class, "store"]);
+Route::get("notification", [NotificationController::class, "show"]);
+Route::get("notification/user/{user}", [NotificationController::class, "getByUser"]);
+Route::get("notification/sent", [NotificationController::class, "getSent"]);

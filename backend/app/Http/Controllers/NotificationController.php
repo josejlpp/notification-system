@@ -7,6 +7,7 @@ use App\Models\NotificationModel;
 use App\Repository\NotificationRepository;
 use Core\Entities\Notification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NotificationController extends Controller
 {
@@ -26,5 +27,26 @@ class NotificationController extends Controller
     public function show()
     {
         return NotificationModel::all();
+    }
+
+    public function getSent()
+    {
+        return DB::table('notification_sent as ns')
+            ->join('categories as c', 'c.id', '=', 'ns.category_id')
+            ->join('channels as ch', 'ch.id', '=', 'ns.channel_id')
+            ->get([
+                'ns.id',
+                'ns.user_name as user',
+                'ns.status',
+                'ns.category_id',
+                'ns.created_at',
+                'ch.name as channel',
+                'c.name as category',
+            ]);
+    }
+
+    public function getByUser($id)
+    {
+        return DB::table('notification_sent')->where('user_id', $id)->get();
     }
 }

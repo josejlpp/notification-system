@@ -29,6 +29,7 @@ services:
     build: ./docker/node
     ports:
       - '80:8080'
+      - '5173:5173'
     volumes:
       - ./frontend:/app
 
