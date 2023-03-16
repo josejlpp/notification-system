@@ -38,6 +38,7 @@ class NotificationController extends Controller
                 'ns.id',
                 'ns.user_name as user',
                 'ns.status',
+                'ns.notification_id',
                 'ns.category_id',
                 'ns.created_at',
                 'ch.name as channel',

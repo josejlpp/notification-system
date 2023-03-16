@@ -4,6 +4,7 @@
     <tr>
       <th scope="col">#</th>
       <th scope="col">User</th>
+      <th scope="col">Notification Id</th>
       <th scope="col">Category</th>
       <th scope="col">Channel</th>
       <th scope="col">Status</th>
@@ -14,6 +15,7 @@
     <tr v-for="item in itemsComputed">
       <th scope="row">{{ item.id}}</th>
       <td>{{ item.user }}</td>
+      <td>#{{ item.notification_id }}</td>
       <td>#{{ item.category_id }} {{ item.category }}</td>
       <td>{{ item.channel }}</td>
       <td>{{ item.status }}</td>
