@@ -44,10 +44,12 @@ class PublishersTest extends TestCase
     {
         $notification = new Notification(
             1,
+            1,
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
         );
 
         $user = new User(
+            1,
             "Jose Luiz",
             new Email('name@gmail.com'),
             '551899999999'

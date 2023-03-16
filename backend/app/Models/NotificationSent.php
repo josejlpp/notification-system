@@ -15,8 +15,7 @@ class NotificationSent extends Model
         'user_name',
         'category_id',
         'channel_id',
+        'notification_id',
         'status'
     ];
-
-    protected $dateFormat = ['created_at'];
 }

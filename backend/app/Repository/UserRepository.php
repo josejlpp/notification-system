@@ -8,7 +8,7 @@ class UserRepository
 {
     public function getByCategory(int $category)
     {
-        $users = UserModel::factory(10)->make();
+        $users = UserModel::factory(5)->make();
         return $users->reject(function ($user) use ($category) {
             return in_array($category, $user->channels);
         });

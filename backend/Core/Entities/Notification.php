@@ -7,6 +7,7 @@ use DateTimeImmutable;
 class Notification
 {
     public function __construct(
+        private readonly int $id,
         private readonly int $category,
         private readonly string $message
     ) {}
@@ -27,5 +28,10 @@ class Notification
             $this->category,
             $this->message
         ];
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 }

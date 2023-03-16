@@ -2,12 +2,13 @@
 
 namespace App\Listeners;
 
-use App\BuilderPublishCollection;
+use App\Builder\BuilderPublishCollection;
+use App\DataTransfer\NotificationSentDTO;
 use App\Events\NotificationStored;
+use App\Repository\ChannelRespository;
+use App\Repository\NotificationSentRepository;
 use App\Repository\UserRepository;
-use Core\Entities\User;
-use App\Models\User as UserModel;
-use Core\Entities\ValueObject\Email;
+use App\Util\NotificationDataUtil;
 use Core\UseCase\PublishNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -29,24 +30,22 @@ class SendNotification implements ShouldQueue
         $publishCollection = BuilderPublishCollection::build();
         $publisher = new PublishNotification($publishCollection);
         $users = (new UserRepository())->getByCategory($event->notification->getCategory());
-
         foreach ($users as $user) {
-            $userEntity = $this->makeUserEntity($user);
+            $userEntity = NotificationDataUtil::makeUserEntityFromUserModel($user);
             $response = $publisher->handle($userEntity, $event->notification);
-            \Log::info([$userEntity->toArray(), $response]);
+            $notificationSentTransfer = NotificationDataUtil::buildNotificationSentDto($userEntity, $event->notification);
+            $this->notificationSentStore($notificationSentTransfer, $response);
         }
     }
 
-    private function makeUserEntity(UserModel $user): User
+    private function notificationSentStore(NotificationSentDTO $notificationSentTransfer, array $response)
     {
-        $entity = new User(
-            $user->name,
-            new Email($user->email),
-            $user->phone_number
-        );
-
-        $entity->setChannels($user->channels);
-
-        return $entity;
+        $sentNotificationRepository = new NotificationSentRepository();
+        foreach ($response as $key => $channelResponse) {
+            $channel = (new ChannelRespository())->getByKey($key);
+            $notificationSentTransfer->channel_id = $channel->id;
+            $notificationSentTransfer->status = $channelResponse ? 'Success' : 'Fail';
+            $sentNotificationRepository->store($notificationSentTransfer);
+        }
     }
 }

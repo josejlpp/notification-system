@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Builder;
 
 use App\Adapters\EmailPublishAdapter;
 use App\Adapters\PushNotificationPublishAdapter;

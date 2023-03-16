@@ -12,7 +12,7 @@ class CreateNotificationTest extends TestCase
         $category = 1;
         $message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
 
-        $notification = new Notification($category, $message);
+        $notification = new Notification(1, $category, $message);
         $this->assertInstanceOf(Notification::class, $notification);
     }
 }

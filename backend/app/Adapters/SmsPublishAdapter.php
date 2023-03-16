@@ -10,6 +10,6 @@ class SmsPublishAdapter implements IPublisherAdapter
 {
     public function publishMessage(User $user, Notification $notification): bool
     {
-        return true;
+        return false;
     }
 }

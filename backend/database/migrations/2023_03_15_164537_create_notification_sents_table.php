@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('user_name');
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('channel_id');
+            $table->unsignedBigInteger('notification_id');
             $table->string('status');
             $table->timestamps();
         });

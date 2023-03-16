@@ -14,6 +14,7 @@ class NotificationController extends Controller
     {
         $notificationModel = (new NotificationRepository())->store($request->all());
         $notification = new Notification(
+            $notificationModel->id,
             $notificationModel->category_id,
             $notificationModel->message
         );
