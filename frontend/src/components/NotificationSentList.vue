@@ -1,4 +1,11 @@
 <template>
+  <nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        Notification Sent List
+      </a>
+    </div>
+  </nav>
   <table class="table table-hover">
     <thead>
     <tr>
@@ -12,7 +19,10 @@
     </tr>
     </thead>
     <tbody>
-    <tr v-for="item in itemsComputed">
+    <tr v-if="!items">
+      <td colspan="7" style="text-align: center">Empty or loading...</td>
+    </tr>
+    <tr v-for="item in itemsComputed" v-if="items">
       <th scope="row">{{ item.id}}</th>
       <td>{{ item.user }}</td>
       <td>#{{ item.notification_id }}</td>
@@ -31,7 +41,7 @@ export default {
   name: "NotificationSentList",
   data() {
     return {
-      items: []
+      items: null
     }
   },
   methods: {

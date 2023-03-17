@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item active">
@@ -10,6 +10,9 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#/list-notification-sent">Log sent notification</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" target="_blank" href="http://localhost:8025/">Mailbox</a>
         </li>
       </ul>
     </div>
@@ -23,4 +26,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
+  .navbar {
+    margin-bottom: 60px;
+  }
 </style>

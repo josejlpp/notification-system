@@ -9,15 +9,17 @@
 import NotificationList from "./components/NotificationList.vue";
 import NotificationSentList from "./components/NotificationSentList.vue";
 import Navbar from "./components/Navbar.vue";
+import NotificationForm from "./components/NotificationForm.vue";
 
 const routes = {
-  '/': NotificationList,
+  '/': NotificationForm,
   '/list-notification': NotificationList,
   '/list-notification-sent': NotificationSentList,
 }
 
 export default {
   components: {
+    NotificationForm,
     NotificationList,
     NotificationSentList,
     Navbar

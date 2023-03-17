@@ -13,6 +13,7 @@ class NotificationController extends Controller
 {
     public function store(Request $request)
     {
+        \Log::warning($request);
         $notificationModel = (new NotificationRepository())->store($request->all());
         $notification = new Notification(
             $notificationModel->id,
@@ -26,7 +27,9 @@ class NotificationController extends Controller
 
     public function show()
     {
-        return NotificationModel::all();
+        return DB::table('notifications as n')
+            ->join('categories as c', 'c.id', '=', 'n.category_id')
+            ->get(['n.*', 'c.name as category']);
     }
 
     public function getSent()

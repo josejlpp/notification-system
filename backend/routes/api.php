@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,3 +24,4 @@ Route::post("notification", [NotificationController::class, "store"]);
 Route::get("notification", [NotificationController::class, "show"]);
 Route::get("notification/user/{user}", [NotificationController::class, "getByUser"]);
 Route::get("notification/sent", [NotificationController::class, "getSent"]);
+Route::get("categories", [CategoryController::class, "get"]);
