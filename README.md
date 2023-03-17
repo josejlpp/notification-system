@@ -1,12 +1,18 @@
-# notification-system
+# Notification-system made for test
+
+## Requirements
+- Docker and Docker-compose
 
 ## how to build project
-- make build
+- make build 
 
-## how to run project
+*In the first time that run it, don't need run the command below*  
+*run make build only in the first time*
+
+## how to run project (only if already built)
 - make
 
 ## Host
-- access api on http://localhost:8080
 - access UI on http://localhost
+- access api on http://localhost:8080
 - access email system on http://localhost:8025
