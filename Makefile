@@ -18,6 +18,7 @@ build:
 	@echo ">>>>> Build Web"
 	docker-compose exec web npm install
 	docker-compose exec web npm run build
+	@echo ">>>>> Finished build, have fun =D"
 
 composer-install:
 	docker run --rm -v $(shell pwd)/backend:/app composer:2.3 composer install
